@@ -15,7 +15,11 @@
 
   $: {
     count = $entries.length;
-    segmentHeight = `${Math.round(500 * Math.tan((2 * Math.PI) / (count * 2)))}px`;
+
+    let wheelSize = parseInt(getComputedStyle(document.documentElement)
+    .getPropertyValue('--wheel-size')) || 500;
+
+    segmentHeight = `${Math.round(wheelSize * Math.tan((2 * Math.PI) / (count * 2)))}px`;
 
     segmentsColors = [];
     let i = 0;
@@ -33,7 +37,6 @@
 
 
   onMount(() => {
-
     let deg;
     wheel.addEventListener('click', routourne);
 
@@ -82,15 +85,15 @@
 
 .wheel {
   display: flex;
-  width: 500px;
-  height: 500px;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
   background-color: rgba(255,255,255,0.1);
   border-radius: 50%;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   position: relative;
-  transform-origin: 250px 250px;
+  transform-origin: calc(var(--wheel-size) / 2) calc(var(--wheel-size) / 2);
 }
 
 ul {
@@ -103,11 +106,11 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: calc(var(--wheel-size) / 2);
   height: var(--segment-height);
   border-top: calc(var(--segment-height) / 2) solid transparent;
   border-bottom: calc(var(--segment-height) / 2) solid transparent;
-  border-right: 250px solid var(--bg);
+  border-right: calc(var(--wheel-size) / 2) solid var(--bg);
   top: calc(var(--segment-height) / 2 * -1);
   transform-origin: 0 calc(var(--segment-height) / 2);
   transform: rotate(calc(360deg / var(--count) * var(--i)));
@@ -115,9 +118,9 @@ ul {
 
 .segment span {
   position: absolute;
-  right: -250px;
+  right: calc(var(--wheel-size) / 2 * -1);
   padding-right: 40px;
-  max-width: 210px;
+  max-width: calc(var(--wheel-size) / 2 - 40px);
   overflow: hidden;
   font-weight: bold;
   text-transform: uppercase;
@@ -132,7 +135,7 @@ ul {
   position: absolute;
   width: 70px;
   height: 50px;
-  top: 225px;
+  top: calc(var(--wheel-size) /2 - 25px);
   right: -20px;
   border-top: 25px solid transparent;
   border-bottom: 25px solid transparent;
@@ -153,8 +156,8 @@ ul {
   height: 50px;
   border-radius: 50%;
   position: absolute;
-  top: 225px;
-  left: 225px;
+  top: calc(var(--wheel-size) /2 - 25px);;
+  left: calc(var(--wheel-size) /2 - 25px);;
   z-index: 2;
   cursor: pointer;
   filter: drop-shadow(0px 0px 4px #222) 
