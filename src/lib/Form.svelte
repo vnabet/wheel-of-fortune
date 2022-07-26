@@ -75,10 +75,12 @@
     color: black;
     position: relative;
     background-color: antiquewhite;
-    border: 4px solid #444;
-    border-radius: 10px;
+    /* border: 4px solid #444; */
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
+    padding: 5px;
+    box-shadow: 10px 10px 10px 5px rgba(0,0,0,.4);
 
   }
 
