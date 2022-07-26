@@ -4,6 +4,7 @@
 
   let toAddValue;
   let addInput;
+  let refs = [];
 
   function deleteClickHandler(index) {
     if($entries.length > 3) {
@@ -31,7 +32,8 @@
   <form>
     {#each $entries as entrie, i}
     <div class="row">
-      <input type="text" bind:value="{entrie}">
+      <input type="text" bind:value="{entrie}" bind:this="{refs[i]}">
+      <button class="clear" class:hidden="{$entries.length <= 3}" on:click|preventDefault="{() => {entrie = ''; refs[i].focus();} }">x</button>
       <button class="delete" class:hidden="{$entries.length <= 3}" on:click|preventDefault="{() => deleteClickHandler(i)}">-</button>
     </div>      
     {/each}
@@ -83,7 +85,7 @@
   .row, .buttons {
     display: flex;
     padding: 5px;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
     width: 100%;
     
@@ -117,11 +119,15 @@
     width: 100%;
   }
 
-  .delete, .add {
+  .delete, .add, .clear {
     width: 25px;
     min-width: unset;
     height: 25px;
     border-radius: 100%;
+  }
+
+  .clear {
+    font-size: .7em;
   }
 
   .delete {
